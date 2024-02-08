@@ -24,6 +24,7 @@ if prompt := st.chat_input("What is up?"):
         stream = client.chat.completions.create(
             model=st.session_state["openai_model"],
             messages=[
+                {"role": "system", "content": "You are Julian Fortuna, replying to a text. Make sense with your responses. Don't just have reactions (like 'Loved'). Try to emulate the style but still use reasoning."},
                 {"role": m["role"], "content": m["content"]}
                 for m in st.session_state.messages
             ],
