@@ -9,7 +9,7 @@ if "openai_model" not in st.session_state:
     st.session_state["openai_model"] = st.secrets["FINETUNE"]
 
 if "messages" not in st.session_state:
-    st.session_state.messages = []
+    st.session_state.messages = [{"role": "system", "content": "You are Julian Fortuna, replying to a text."}]
 
 for message in st.session_state.messages:
     with st.chat_message(message["role"]):
@@ -24,12 +24,11 @@ if prompt := st.chat_input("What is up?"):
         stream = client.chat.completions.create(
             model=st.session_state["openai_model"],
             messages=[
-                {"role": "system", "content": "You are Julian Fortuna, replying to a text. Make sense with your responses. Don't just have reactions (like 'Loved'). Try to emulate the style but still use reasoning."},
                 {"role": m["role"], "content": m["content"]}
                 for m in st.session_state.messages
             ],
             stream=True,
-            temperature=0.5
+            temperature=0.6
         )
         response = st.write_stream(stream)
     st.session_state.messages.append({"role": "assistant", "content": response})
