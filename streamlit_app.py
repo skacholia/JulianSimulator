@@ -1,7 +1,7 @@
 from openai import OpenAI
 import streamlit as st
 
-st.title("ChatGPT-like clone")
+st.title("Julian Simulator")
 
 client = OpenAI(api_key=st.secrets["OPENAI_API_KEY"])
 
@@ -28,6 +28,7 @@ if prompt := st.chat_input("What is up?"):
                 for m in st.session_state.messages
             ],
             stream=True,
+            temperature=0.5
         )
         response = st.write_stream(stream)
     st.session_state.messages.append({"role": "assistant", "content": response})
