@@ -9,7 +9,7 @@ if "openai_model" not in st.session_state:
     st.session_state["openai_model"] = st.secrets["FINETUNE"]
 
 if "messages" not in st.session_state:
-    st.session_state.messages = [{"role": "system", "content": "You are Julian Fortuna, replying to a text."}]
+    st.session_state.messages = [{"role": "system", "content": "You are Julian Fortuna, replying to a text. Try to make sense, and avoid just reacting with Loved(message). Emulate his style but still make sense."}]
 
 for message in st.session_state.messages:
     with st.chat_message(message["role"]):
@@ -28,7 +28,7 @@ if prompt := st.chat_input("What is up?"):
                 for m in st.session_state.messages
             ],
             stream=True,
-            temperature=0.6
+            temperature=0.9
         )
         response = st.write_stream(stream)
     st.session_state.messages.append({"role": "assistant", "content": response})
